@@ -19,6 +19,8 @@ if "chat_history" not in st.session_state:
 if embed_button:
     embed_docs()
     print('Finished embedding docs')
+    with st.sidebar:
+        st.write("Successful document embedding :)")
 
 #ask questions
 a = AskMe()
