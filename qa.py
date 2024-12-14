@@ -14,6 +14,7 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 from dotenv import load_dotenv
 import os
 import openai
+import shutil
 
 load_dotenv()
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
@@ -37,6 +38,16 @@ llm = ChatOpenAI(model_name=llm_name, temperature=temperature)
 greeting = llm.invoke("Hello world!")
 print(greeting.content)
 
+def check_chroma_db_exists(db_path):
+    try:
+        # Attempt to load the database
+        old_db = Chroma(persist_directory=db_path)
+        # If successful, the database exists
+        return True
+    except Exception as e:
+        # If there's an error, the database likely doesn't exist
+        return False
+
 def embed_docs():
     loaded_file = "./docs/"     #specify the folder that stores the document
     print(f'embed pdf document from folder {loaded_file} and save to database')
@@ -56,9 +67,19 @@ def embed_docs():
     # define embedding
     embeddings = OpenAIEmbeddings()
 
+    #clear up existing database before embedding (if a database exists)
+    if check_chroma_db_exists(persist_directory):
+        print("Chroma database exists")
+        vector_store = Chroma(persist_directory=persist_directory)  # Where to save data locally, remove if not necessary
+        vector_store.reset_collection()
+        print("Finished resetting database")
+    else:
+        print("Chroma database does not exist")
+
     # create vector database from data
     db = Chroma.from_documents(documents=docs, embedding=embeddings, persist_directory=persist_directory)
     print('Successful Document Embedding')
+    
 
 
 client = openai.OpenAI()
@@ -123,7 +144,7 @@ class AskMe:
         qa_system_prompt = """You are an assistant for question-answering tasks. \
         Use only the following pieces of retrieved context to answer the question. \
         If the following pieces of context does not provide any information about the question, \
-        just say that you don't know the answer without guessing or using other sources to answer. \
+        just say that you don't know the answer without trying to guessing or answering. \
 
         {context}"""
 
