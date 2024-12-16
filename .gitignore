@@ -1,5 +1,4 @@
 .env
 db/
-docs/
 .venv/
 __pycache__/
