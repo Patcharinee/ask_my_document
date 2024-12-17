@@ -5,6 +5,8 @@
 This AI Document chatbot is designed to answer your questions about the documents you have uploaded and embedded. You can ask the chatbot via the chat interface in a conversational style. 
 The chatbot will answer based on the uploaded document only without guessing or using other sources of information.
 
+https://github.com/user-attachments/assets/2078d419-fc10-4829-b148-9588fa239710
+
 ## Approach
 The AI Document chatbot uses the Retrieval Augmented Generation (RAG) technique, where the Large Language Model (LLM) retrieves relevant information from the documents we provide before generating an answer to our question.
 
