@@ -24,7 +24,7 @@ The AI Document chatbot uses the Retrieval Augmented Generation (RAG) technique,
 
 A sample PDF document is provided in the "docs" folder. 
 You can proceed to step 2. Embed Documents by clicking the "Embed" button.
-After you see "the Successful document embedding :)" message, you can start asking questions in the chat interface.
+After you see "Successful document embedding :)" message, you can start asking questions in the chat interface.
 
 Some sample questions that you could ask are:
 - "What is Scrum in software development?"
